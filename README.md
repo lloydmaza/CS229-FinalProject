@@ -1,2 +1,6 @@
-# CS229-FinalProject
-Machine learning final project on adaptive path planning for multi-agent systems
+# CS229-ProjectCode
+
+## Project: Adaptive Multi-Agent Path Planning for Distributed UAV Systems
+## Authors: Lloyd Maza and Cameron McMillan
+
+Repository containing all code used for CS 229 final project
