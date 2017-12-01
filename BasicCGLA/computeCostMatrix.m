@@ -1,10 +1,26 @@
-function G = computeCostMatrix(n, A, target)
-%UNTITLED4 Summary of this function goes here
-%   Detailed explanation goes here
+function G = computeCostMatrix(A, targs)
+% computeCostMatrix generates CGLA cost matrix G
+%
+% Inputs:
+%       A - weight matrix associated with known map
+%   targs - cell array of structs containing target information
+%
+% Outputs:
+%       G - cost matrix associated with known map
 
 % Initialize G
+n = size(A, 1);
+numTargs = length(targs); 
+
 G0 = 1000*ones(n);
-G0(target(1), target(2)) = 0;
+
+for ii = 1:numTargs
+    currTarg = targs{ii};
+    x = currTarg.state.x;
+    y = currTarg.state.y;
+    
+    G0(x, y) = 0;
+end
 
 % Iterate on G until convergence
 iterWithoutChange = 0;
@@ -12,16 +28,16 @@ iterWithoutChange = 0;
 while iterWithoutChange < n^2
     Gnew = G0;
     
-    for i = 1:n
-        for j = 1:n
-            r = [i, j];
+    for jj = 1:n
+        for kk = 1:n
+            r = [jj, kk];
             changeMadeInG = false;
             
-            for k = 1:n
-                for l = 1:n
-                    Gnew(k, l) = min([G0(k, l), A{k, l}(i, j) + G0(i, j)]);
+            for pp = 1:n
+                for qq = 1:n
+                    Gnew(pp, qq) = min([G0(pp, qq), A{pp, qq}(jj, kk) + G0(jj, kk)]);
                     
-                    if Gnew(k, l) ~= G0(k, l)
+                    if Gnew(pp, qq) ~= G0(pp, qq)
                         changeMadeInG = true;
                     end
                 end

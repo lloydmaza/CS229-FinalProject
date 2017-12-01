@@ -17,7 +17,6 @@ threats{1} = {[10 10], 5*eye(2)};
 threats{2} = {[5 4], eye(2)};
 threats{3} = {[8, 14], eye(2)};
 
-
 % Compute the weight matrix A
 A = computeWeightMatrix(n, threats, 2E3);
 
