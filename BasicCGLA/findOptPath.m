@@ -1,6 +1,13 @@
-function path = findOptPath(init, target, G)
-%UNTITLED5 Summary of this function goes here
-%   Detailed explanation goes here
+function path = findOptPath(init, fin, G)
+% findOptPath finds the optimal path between two points on the G matrix
+%
+% Inputs:
+%   init - starting point [x, y]
+%    fin - end point [x, y]
+%      G - cost matrix associated with known map
+%
+% Outputs:
+%   path - set of optimal waypoints between the desired points
 
 n = size(G, 1);
 
@@ -17,7 +24,7 @@ altG(2:(end - 1), 2:(end - 1)) = G;
 
 path = init;
 
-while ~all(path(end, :) == target)
+while ~all(path(end, :) == fin)
     p0 = path(end, :);
     searchPoints = altG(p0(1):(p0(1) + 2), (p0(2)):(p0(2) + 2));
     searchInds = inds((p0(1)):(p0(1) + 2), (p0(2)):(p0(2) + 2));
