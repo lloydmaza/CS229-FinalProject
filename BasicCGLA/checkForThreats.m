@@ -1,6 +1,6 @@
-function [A, updatedFlag] = checkForThreats(uavs, threats, A, K)
+function [updatedFlag, threats] = checkForThreats(uavs, threats)
 updatedFlag = 0;
-numThreats = size(treats,2);
+numThreats = size(threats,2);
 numUavs = size(uavs, 2);
 for i = 1:numUavs
     for j = 1:numThreats
@@ -14,18 +14,5 @@ for i = 1:numUavs
         end
     end
         
-end
-
-count = 0;
-curThreats = {};
-if updatedFlag == 1
-    for j = 1:numThreats
-        if threats{j}.state.found == 1
-            curThreats{count+1} = threats{j};
-            count = count+1;
-        end
-    end
-    
-    A = computeWeightMatrix(size(A,1), threats, K);
 end
 end

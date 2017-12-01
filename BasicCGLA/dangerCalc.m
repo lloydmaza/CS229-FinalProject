@@ -19,10 +19,10 @@ numThreats = length(threats);
 
 dangerMult = ones(size(x));
 for i = 1:numThreats
-    threat = numThreats{i};
+    threat = threats{i};
     
     mu = [threat.state.x, threat.state.y];
-    cov = threat.state.cov;
+    cov = threat.trait.cov;
     
     dangerMult = dangerMult .* (1 - mvnpdf(X', mu, cov))';
 end
