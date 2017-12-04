@@ -17,6 +17,7 @@ uav.trait.or = OR;
 uav.trait.target = target;
 uav.trait.stateHistory = pos;
 uav.trait.path = [];
+uav.trait.G = [];
 
 end
 

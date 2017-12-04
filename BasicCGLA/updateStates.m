@@ -1,4 +1,4 @@
-function UAVs = updateStates(UAVs, targets)
+function [UAVs, uavStop] = updateStates(UAVs, targets)
 % updateStates Progresses UAV states along their optimal paths
 %
 % Inputs:
@@ -7,8 +7,11 @@ function UAVs = updateStates(UAVs, targets)
 %
 % Outputs:
 %      UAVs - cell array of structs containing updated UAV information
+%   uavStop - flag indicating whether a UAV went inactive in this step
 
 numUAVs = length(UAVs);
+
+uavStop = false;
 
 for ii = 1:numUAVs
     uav = UAVs{ii};
@@ -29,6 +32,8 @@ for ii = 1:numUAVs
         if all(nextPoint == fin)
             uav.state.active = false;
             uav.trait.stateHistory = [uav.trait.stateHistory; nextPoint];
+            
+            uavStop = true;
         end
         
     end

@@ -28,7 +28,7 @@ for ii = 1:n^2
         A(ii, jj) = sqrt(dx^2 + dy^2);
         
         threatDanger = dangerCalc([x1, y1], [x2, y2], threats);
-        A(ii, jj) = A(ii, jj) + threatDanger;
+        A(ii, jj) = A(ii, jj) + K*threatDanger;
         
     end
     

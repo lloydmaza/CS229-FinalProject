@@ -13,13 +13,17 @@ K = 2E3;
 %   States: x, y, active
 %   Traits: or, target, stateHistory, path
 UAVs{1} = initUAV([2, 1], 3, 1);
-UAVs{2} = initUAV([18, 6], 3, 1);
+UAVs{2} = initUAV([18, 6], 3, 2);
 
 % Initialize targets
 %   States: x, y, found
 targets{1}.state.x = 10; 
 targets{1}.state.y = 16;
 targets{1}.state.found = true;
+
+targets{2}.state.x = 5; 
+targets{2}.state.y = 14;
+targets{2}.state.found = true;
 
 % Place obstacles
 %   States: x, y, found
@@ -54,9 +58,9 @@ while any(cellfun(@(c) c.state.active, UAVs))
     if updatedFlag
         
         A = computeWeightMatrix(n, threats, K);
-        G = computeCostMatrix(A, targets);
+        UAVs = computeCostMatrix(UAVs, A, targets);
         
-        UAVs = updatePaths(UAVs, targets, G);
+        UAVs = updatePaths(UAVs, targets);
         
     end
     
@@ -91,14 +95,20 @@ axis(n*[0, 1, 0, 1]);
 % Plot level curves on the threats
 [X, Y] = meshgrid(linspace(1, n, 10*n)); %// all combinations of x, y
 
+Z = zeros(size(X));
 for ii = 1:length(threats)
+    
     mu = [threats{ii}.state.x, threats{ii}.state.y];
     sigma = threats{ii}.trait.cov;
     
-    Z = mvnpdf([X(:) Y(:)], mu, sigma);
-    Z = reshape(Z, size(X));
-    h2 = contour(X, Y, Z);
+    Zi = mvnpdf([X(:) Y(:)], mu, sigma);
+    Zi = reshape(Zi, size(X));
+    Z = Z + Zi;
+    
 end
+
+contour(X, Y, Z);
+
 axis equal
 grid on
 
