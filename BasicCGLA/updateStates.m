@@ -13,7 +13,7 @@ numUAVs = length(UAVs);
 for ii = 1:numUAVs
     uav = UAVs{ii};
     
-    if uav.trait.active
+    if uav.state.active
         target = targets{uav.trait.target};
         fin = [target.state.x, target.state.y];
         
