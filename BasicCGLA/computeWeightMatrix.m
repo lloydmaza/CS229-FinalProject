@@ -12,25 +12,29 @@ function A = computeWeightMatrix(n, threats, K)
 % Outputs:
 %         A - weight matrix associated with known map
 
-A = cell(n);
+A = zeros(n^2);
 
-for i = 1:n
-    for j = 1:n
-        Aij = zeros(n);
+for ii = 1:n^2
+    
+    [x1, y1] = ind2sub([n, n], ii);
+    
+    for jj = 1:ii
         
-        for k = 1:n
-            for l = 1:n
-                Aij(k, l) = sqrt((i - k)^2 + (j - l)^2);
-                
-                totalDanger = dangerCalc([i, j], [k, l], threats);
-                Aij(k, l) = Aij(k, l) + K*totalDanger;
-                
-            end
-        end
-        A{i, j} = Aij;
+        [x2, y2] = ind2sub([n, n], jj);
+        
+        dx = x1 - x2;
+        dy = y1 - y2;
+        
+        A(ii, jj) = sqrt(dx^2 + dy^2);
+        
+        threatDanger = dangerCalc([x1, y1], [x2, y2], threats);
+        A(ii, jj) = A(ii, jj) + threatDanger;
         
     end
+    
 end
+
+A = A + A.';
 
 end
 

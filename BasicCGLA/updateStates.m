@@ -27,10 +27,13 @@ for ii = 1:numUAVs
         uav.state.y = nextPoint(2);
         
         if all(nextPoint == fin)
-            uav.trait.active = false;
+            uav.state.active = false;
+            uav.trait.stateHistory = [uav.trait.stateHistory; nextPoint];
         end
         
     end
+    
+    UAVs{ii} = uav;
 end
 
 end

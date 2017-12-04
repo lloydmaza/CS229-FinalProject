@@ -9,7 +9,7 @@ function G = computeCostMatrix(A, targs)
 %       G - cost matrix associated with known map
 
 % Initialize G
-n = size(A, 1);
+n = sqrt(size(A, 1));
 numTargs = length(targs); 
 
 G0 = 1000*ones(n);
@@ -35,7 +35,11 @@ while iterWithoutChange < n^2
             
             for pp = 1:n
                 for qq = 1:n
-                    Gnew(pp, qq) = min([G0(pp, qq), A{pp, qq}(jj, kk) + G0(jj, kk)]);
+                    
+                    ind1 = sub2ind([n, n], jj, kk);
+                    ind2 = sub2ind([n, n], pp, qq);
+                    
+                    Gnew(pp, qq) = min([G0(pp, qq), A(ind1, ind2) + G0(jj, kk)]);
                     
                     if Gnew(pp, qq) ~= G0(pp, qq)
                         changeMadeInG = true;
