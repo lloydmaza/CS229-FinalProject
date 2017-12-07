@@ -26,14 +26,17 @@ for ii = 1:length(UAVs)
     iterWithoutChange = 0;
     
     while iterWithoutChange < n^2
+        
         Gnew = G0;
         
         for jj = 1:n
+            
             for kk = 1:n
-                r = [jj, kk];
+                
                 changeMadeInG = false;
                 
                 for pp = 1:n
+                    
                     for qq = 1:n
                         
                         ind1 = sub2ind([n, n], jj, kk);
@@ -42,21 +45,29 @@ for ii = 1:length(UAVs)
                         Gnew(pp, qq) = min([G0(pp, qq), A(ind1, ind2) + G0(jj, kk)]);
                         
                         if Gnew(pp, qq) ~= G0(pp, qq)
+                            
                             changeMadeInG = true;
+                            
                         end
+                        
                     end
+                    
                 end
                 
                 if ~changeMadeInG
+                    
                     iterWithoutChange = iterWithoutChange + 1;
+                    
                 end
                 
                 G0 = Gnew;
                 
             end
+            
         end
+        
     end
     
     UAVs{ii}.trait.G = Gnew;
+    
 end
-
