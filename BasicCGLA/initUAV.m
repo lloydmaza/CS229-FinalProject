@@ -12,11 +12,13 @@ function uav = initUAV(pos, OR, target)
 uav.state.x = pos(1);
 uav.state.y = pos(2);
 uav.state.active = true;
+uav.state.fuel = 200; % Initialize all UAVs with the same fuel level
 
 uav.trait.or = OR;
 uav.trait.target = target;
 uav.trait.stateHistory = pos;
 uav.trait.path = [];
+uav.trait.pathHome = [];
 uav.trait.G = [];
 
 end

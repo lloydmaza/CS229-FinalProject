@@ -17,13 +17,18 @@ UAVs{2} = initUAV([18, 6], 3, 2);
 
 % Initialize targets
 %   States: x, y, found
-targets{1}.state.x = 10; 
-targets{1}.state.y = 26;
-targets{1}.state.found = true;
+% Target 1 = home base
+targets{1}.state.x = 1; 
+targets{1}.state.y = 1;
+targets{1}.state.visited = true;
 
 targets{2}.state.x = 22; 
 targets{2}.state.y = 17;
-targets{2}.state.found = true;
+targets{2}.state.visited = false;
+
+targets{3}.state.x = 10; 
+targets{3}.state.y = 26;
+targets{3}.state.visited = false;
 
 % Place obstacles
 %   States: x, y, found
