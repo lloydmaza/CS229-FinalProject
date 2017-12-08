@@ -10,7 +10,10 @@ threats{2}.state.found = 1;
 threats{3}.state.x = 8; threats{3}.state.y = 14; threats{3}.trait.cov = eye(2);
 threats{3}.state.found = 0;
 
-targets{1}.state.x = 5; targets{1}.state.y = 5;
+targets{1}.state.x = 1; targets{1}.state.y = 1; targets{1}.state.visited = 1;
+targets{2}.state.x = 2; targets{2}.state.y = 2; targets{2}.state.visited = 0;
+targets{3}.state.x = 9; targets{3}.state.y = 8; targets{3}.state.visited = 0;
+
 % targets{2}.state.x = 9; targets{2}.state.y = 10;
 % targets{3}.state.x = 15; targets{3}.state.y = 15;
 % targets{4}.state.x = 5; targets{4}.state.y = 18;
