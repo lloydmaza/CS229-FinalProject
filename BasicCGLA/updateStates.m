@@ -50,9 +50,9 @@ for ii = 1:numUAVs
                 uav.trait.target = 1;
                 uavStop = true;
                 
-%                 shortPath = findPathHome(nextPoint, homeCoord);
-%                 
-%                 uav.trait.path = shortPath;
+                shortPath = findPathHome(nextPoint, homeCoord);
+                
+                uav.trait.path = shortPath;
                 
             end
             
