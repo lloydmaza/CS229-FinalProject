@@ -6,14 +6,14 @@ clc
 tic
 
 % Generate grid map
-n = 30;
-K = 1E3;
+n = 20;
+K = 2E3;
 
 % Initialize UAVs
 %   States: x, y, active
 %   Traits: or, target, stateHistory, path, G
-UAVs{1} = initUAV([2, 1], 3, 1);
-UAVs{2} = initUAV([18, 6], 3, 2);
+UAVs{1} = initUAV([2, 1], 3, 2);
+% UAVs{2} = initUAV([9, 6], 3, 3);
 
 % Initialize targets
 %   States: x, y, found
@@ -22,12 +22,12 @@ targets{1}.state.x = 1;
 targets{1}.state.y = 1;
 targets{1}.state.visited = true;
 
-targets{2}.state.x = 22; 
-targets{2}.state.y = 17;
+targets{2}.state.x = 5; 
+targets{2}.state.y = 11;
 targets{2}.state.visited = false;
 
-targets{3}.state.x = 10; 
-targets{3}.state.y = 26;
+targets{3}.state.x = 12; 
+targets{3}.state.y = 2;
 targets{3}.state.visited = false;
 
 % Place obstacles
@@ -48,25 +48,25 @@ threats{3}.state.y = 9;
 threats{3}.state.found = false;
 threats{3}.trait.cov = 0.5*eye(2);
 
-threats{4}.state.x = 8; 
-threats{4}.state.y = 14;
+threats{4}.state.x = 3; 
+threats{4}.state.y = 3;
 threats{4}.state.found = false;
 threats{4}.trait.cov = eye(2);
 
-threats{5}.state.x = 15; 
-threats{5}.state.y = 13;
+threats{5}.state.x = 6; 
+threats{5}.state.y = 6;
 threats{5}.state.found = false;
 threats{5}.trait.cov = 2*eye(2);
 
-threats{6}.state.x = 3; 
-threats{6}.state.y = 27;
+threats{6}.state.x = 1; 
+threats{6}.state.y = 12;
 threats{6}.state.found = false;
 threats{6}.trait.cov = 3*eye(2);
 
-threats{7}.state.x = 24; 
-threats{7}.state.y = 28;
-threats{7}.state.found = false;
-threats{7}.trait.cov = 0.5*eye(2);
+% threats{7}.state.x = ; 
+% threats{7}.state.y = 28;
+% threats{7}.state.found = false;
+% threats{7}.trait.cov = 0.5*eye(2);
 
 tic
 % Run the simulation while any UAVs are active
@@ -110,6 +110,23 @@ for ii = 1:length(UAVs)
     hold on
     plot(uavX(1), uavY(2), 'or', 'MarkerFaceColor', 'r');
     plot(targX, targY, 'ob', 'MarkerFaceColor', 'b');
+    
+end
+
+for jj = 1:length(targets)
+    
+    targX = targets{jj}.state.x;
+    targY = targets{jj}.state.y;
+    
+    if jj == 1
+    
+        plot(targX, targY, 'gd', 'MarkerFaceColor', 'g');
+        
+    else
+        
+        plot(targX, targY, 'ob', 'MarkerFaceColor', 'b');
+        
+    end
     
 end
 

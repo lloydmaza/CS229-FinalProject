@@ -4,6 +4,7 @@ function [UAVs, uavStop] = updateStates(UAVs, targets)
 % Inputs:
 %      UAVs - cell array of structs containing UAV information
 %   targets - cell array of structs containing target information
+%         A - weight matrix associated with known map
 %
 % Outputs:
 %      UAVs - cell array of structs containing updated UAV information
@@ -37,14 +38,19 @@ for ii = 1:numUAVs
         if uav.trait.target ~= 1
             home = targets{1};
             homeCoord = [home.state.x, home.state.y];
+                      
+            lengthPathHome = ceil(sqrt(sum((homeCoord - nextPoint).^2)));
             
-            pathHome = findOptPath(nextPoint, homeCoord, uav.trait.G);
-            uav.trait.pathHome = pathHome;
-            
-            lengthPathHome = size(pathHome, 1);
-            
-            if lengthPathHome <= uav.state.fuel
+            % If it can't make it home, define a rush path back home
+            if lengthPathHome >= uav.state.fuel
+                
                 uav.trait.target = 1;
+                uavStop = true;
+                
+%                 shortPath = findPathHome(nextPoint, homeCoord);
+%                 
+%                 uav.trait.path = shortPath;
+                
             end
             
         end
