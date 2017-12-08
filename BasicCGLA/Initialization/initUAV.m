@@ -1,4 +1,4 @@
-function uav = initUAV(pos, OR, target)
+function uav = initUAV(pos, OR, target, fuel)
 % initUAV initializes UAV structure
 %
 % Inputs:
@@ -12,7 +12,7 @@ function uav = initUAV(pos, OR, target)
 uav.state.x = pos(1);
 uav.state.y = pos(2);
 uav.state.active = true;
-uav.state.fuel = 25; % Initialize all UAVs with the same fuel level
+uav.state.fuel = fuel; % Initialize all UAVs with the same fuel level
 
 uav.trait.or = OR;
 uav.trait.target = target;
