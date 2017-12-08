@@ -10,7 +10,7 @@ n = 20;
 K = 2E3;
 
 %Initializes all the threats, uavs, and targets
-[uavs, threats, targets] = scenario3();
+[UAVs, threats, targets] = scenario3();
 
 tic
 % Run the simulation while any UAVs are active

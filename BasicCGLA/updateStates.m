@@ -21,6 +21,9 @@ for ii = 1:numUAVs
         target = targets{uav.trait.target};
                 
         fin = [target.state.x, target.state.y];
+        if size(uav.trait.path,1) < 3
+           help = 'trigger breakpoint'; 
+        end
         
         currPoint = uav.trait.path(1, :);
         nextPoint = uav.trait.path(2, :);
