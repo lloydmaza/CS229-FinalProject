@@ -27,9 +27,11 @@ axis([0, 1, 0, 1]);
 
 axis equal
 grid on
+ 
+ax = gca;
+ax.XTick = [0:0.1:1];
+ax.YTick = [0:0.1:1];
 
-xticks(0:0.1:1);
-yticks(0:0.1:1);
 
 grid minor
 
