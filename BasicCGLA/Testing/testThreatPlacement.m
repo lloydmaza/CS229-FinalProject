@@ -6,3 +6,7 @@ clc
 % Scenario 1
 [uavs, threats, targets, n] = scenario1();
 plotThreats(n, threats);
+
+% Scenario 1 Small
+[uavs, threats, targets, n] = scenario1_small();
+plotThreats(n, threats);

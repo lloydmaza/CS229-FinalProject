@@ -6,7 +6,7 @@ clc
 tic
 
 %Initializes all the threats, uavs, and targets
-[UAVs, threats, targets, n] = scenario1();
+[UAVs, threats, targets, n] = scenario1_small();
 K = 2E3;
 
 tic
@@ -47,7 +47,7 @@ for ii = 1:length(UAVs)
     uavY = UAVs{ii}.trait.stateHistory(:, 2);
     
 %     plot(uavX./n, uavY./n, 'k', 'LineWidth', 1.5);
-    plot(uavX./n, uavY.n, 'k');
+    plot(uavX./n, uavY./n, 'k');
     hold on
     plot(uavX(1)./n, uavY(2)./n, 'or', 'MarkerFaceColor', 'r');
     
@@ -60,7 +60,7 @@ for jj = 2:length(targets)
     targY = targets{jj}.state.y;
     
     
-    plot(targX, targY, 'ob', 'MarkerFaceColor', 'b');
+    plot(targX./n, targY./n, 'ob', 'MarkerFaceColor', 'b');
     
 end
 
@@ -89,3 +89,5 @@ end
 % grid on
 
 toc
+
+beep

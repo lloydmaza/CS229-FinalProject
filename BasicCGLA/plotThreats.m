@@ -32,9 +32,7 @@ ax = gca;
 ax.XTick = [0:0.1:1];
 ax.YTick = [0:0.1:1];
 
-
 grid minor
-
 
 end
 
