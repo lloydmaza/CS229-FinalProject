@@ -9,6 +9,12 @@ tic
 [UAVs, threats, targets, n] = scenario1_small();
 K = 2E3;
 
+% Plot the true threat layout
+f0 = plotThreats(n, threats);
+hold on
+plot(UAVs{1}.state.x/n, UAVs{1}.state.y/n, 'ro', 'MarkerFaceColor', 'r');
+plot(targets{2}.state.x/n, targets{2}.state.y/n, 'bo', 'MarkerFaceColor', 'b');
+
 tic
 % Run the simulation while any UAVs are active
 numIt = 1;
@@ -27,6 +33,35 @@ while any(cellfun(@(c) c.state.active, UAVs))
         UAVs = computeCostMatrix(UAVs, A, targets);
         
         UAVs = updatePaths(UAVs, targets);
+        
+    end
+    
+    % Any time a new threat is found, plot the known threats, the state
+    % history, and the intended path
+    if updatedFlag
+        
+        knownThreatsMask = cellfun(@(c) logical(c.state.found), threats);
+        knownThreats = {threats{knownThreatsMask}};
+        
+        plotThreats(n, knownThreats);
+        hold on
+        
+        uav = UAVs{1};
+        init = uav.trait.stateHistory(1, :);
+        curr = [uav.state.x, uav.state.y];
+        
+        target = targets{uav.trait.target};
+        fin = [target.state.x, target.state.y];
+        
+        plot(curr(1)./n, curr(2)./n, 'ok', 'MarkerFaceColor', 'k');
+        plot(init(1)./n, init(2)./n, 'or', 'MarkerFaceColor', 'r');
+        plot(fin(1)./n, fin(2)./n, 'ob', 'MarkerFaceColor', 'b');
+        
+        hist = [uav.trait.stateHistory; curr];
+        path = uav.trait.path;
+        
+        plot(hist(:, 1)./n, hist(:, 2)./n, 'k');
+        plot(path(:, 1)./n, path(:, 2)./n, 'k--');      
         
     end
     
@@ -49,7 +84,7 @@ for ii = 1:length(UAVs)
 %     plot(uavX./n, uavY./n, 'k', 'LineWidth', 1.5);
     plot(uavX./n, uavY./n, 'k');
     hold on
-    plot(uavX(1)./n, uavY(2)./n, 'or', 'MarkerFaceColor', 'r');
+    plot(uavX(1)./n, uavY(1)./n, 'or', 'MarkerFaceColor', 'r');
     
 end
 
@@ -64,30 +99,10 @@ for jj = 2:length(targets)
     
 end
 
-% xlabel('x');
-% ylabel('y');
-% axis(n*[0, 1, 0, 1]);
-%
-% % Plot level curves on the threats
-% [X, Y] = meshgrid(linspace(1, n, 10*n)); %// all combinations of x, y
-%
-% Z = zeros(size(X));
-% for ii = 1:length(threats)
-%
-%     mu = [threats{ii}.state.x, threats{ii}.state.y];
-%     sigma = threats{ii}.trait.cov;
-%
-%     Zi = mvnpdf([X(:) Y(:)], mu, sigma);
-%     Zi = reshape(Zi, size(X));
-%     Z = Z + Zi;
-%
-% end
-%
-% contour(X, Y, Z);
-%
-% axis equal
-% grid on
+% Generate a surface plot of the G matrix
+G = UAVs{1}.trait.G;
+% [X, Y] = meshgrid(1:n, 1:n);
+figure
+surface(G');
 
 toc
-
-beep

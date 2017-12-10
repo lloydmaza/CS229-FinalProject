@@ -50,23 +50,23 @@ ii = ii + 1;
 threats{ii}.state.x = 12; 
 threats{ii}.state.y = 10;
 threats{ii}.state.found = false;
-threats{ii}.trait.cov = 2*eye(2);
+threats{ii}.trait.cov = eye(2);
 
 ii = ii + 1;
 threats{ii}.state.x = 5; 
-threats{ii}.state.y = 11;
+threats{ii}.state.y = 9;
 threats{ii}.state.found = false;
 threats{ii}.trait.cov = 0.5*eye(2); 
 
 ii = ii + 1;
 threats{ii}.state.x = 2; 
-threats{ii}.state.y = 12;
+threats{ii}.state.y = 8;
 threats{ii}.state.found = false;
 threats{ii}.trait.cov = eye(2); 
 
 ii = ii + 1;
 threats{ii}.state.x = 8; 
-threats{ii}.state.y = 11;
+threats{ii}.state.y = 10;
 threats{ii}.state.found = false;
 threats{ii}.trait.cov = eye(2); 
 
