@@ -21,7 +21,7 @@ targets{2}.state.visited = false;
 
 % Target 1 = home base
 %   Note: target 1 is not used in this scenario
-targets{1}.state.x = 1; 
+targets{1}.state.x = 18; 
 targets{1}.state.y = 1;
 targets{1}.state.visited = true;
 
