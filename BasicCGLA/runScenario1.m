@@ -7,6 +7,7 @@ tic
 
 %Initializes all the threats, uavs, and targets
 [UAVs, threats, targets, n] = scenario1_small();
+% Try 10, 1000, 5000
 K = 2E3;
 
 % Plot the true threat layout
@@ -43,8 +44,8 @@ while any(cellfun(@(c) c.state.active, UAVs))
         knownThreatsMask = cellfun(@(c) logical(c.state.found), threats);
         knownThreats = {threats{knownThreatsMask}};
         
-        plotThreats(n, knownThreats);
-        hold on
+%         plotThreats(n, knownThreats);
+%         hold on
         
         uav = UAVs{1};
         init = uav.trait.stateHistory(1, :);
@@ -53,15 +54,15 @@ while any(cellfun(@(c) c.state.active, UAVs))
         target = targets{uav.trait.target};
         fin = [target.state.x, target.state.y];
         
-        plot(curr(1)./n, curr(2)./n, 'ok', 'MarkerFaceColor', 'k');
-        plot(init(1)./n, init(2)./n, 'or', 'MarkerFaceColor', 'r');
-        plot(fin(1)./n, fin(2)./n, 'ob', 'MarkerFaceColor', 'b');
+%         plot(curr(1)./n, curr(2)./n, 'ok', 'MarkerFaceColor', 'k');
+%         plot(init(1)./n, init(2)./n, 'or', 'MarkerFaceColor', 'r');
+%         plot(fin(1)./n, fin(2)./n, 'ob', 'MarkerFaceColor', 'b');
         
         hist = [uav.trait.stateHistory; curr];
         path = uav.trait.path;
         
-        plot(hist(:, 1)./n, hist(:, 2)./n, 'k');
-        plot(path(:, 1)./n, path(:, 2)./n, 'k--');      
+%         plot(hist(:, 1)./n, hist(:, 2)./n, 'k');
+%         plot(path(:, 1)./n, path(:, 2)./n, 'k--');      
         
     end
     
@@ -70,6 +71,11 @@ while any(cellfun(@(c) c.state.active, UAVs))
     numIt = numIt + 1;
     
 end
+
+% Check the total distance and danger associated with the path
+[dist, danger] = pathProperties(UAVs{1}.trait.stateHistory, threats);
+fprintf('Total path length: %f\n', dist);
+fprintf('Total path danger: %f\n', danger);
 
 % Plot the threats
 f = plotThreats(n, threats);
@@ -81,7 +87,6 @@ for ii = 1:length(UAVs)
     uavX = UAVs{ii}.trait.stateHistory(:, 1);
     uavY = UAVs{ii}.trait.stateHistory(:, 2);
     
-%     plot(uavX./n, uavY./n, 'k', 'LineWidth', 1.5);
     plot(uavX./n, uavY./n, 'k');
     hold on
     plot(uavX(1)./n, uavY(1)./n, 'or', 'MarkerFaceColor', 'r');
@@ -94,15 +99,8 @@ for jj = 2:length(targets)
     targX = targets{jj}.state.x;
     targY = targets{jj}.state.y;
     
-    
     plot(targX./n, targY./n, 'ob', 'MarkerFaceColor', 'b');
     
 end
-
-% Generate a surface plot of the G matrix
-G = UAVs{1}.trait.G;
-% [X, Y] = meshgrid(1:n, 1:n);
-figure
-surface(G');
 
 toc
